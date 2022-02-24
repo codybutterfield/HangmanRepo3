@@ -32,7 +32,6 @@ namespace HangmanWeb.Pages
             {
                 salt += b[i].ToString("X");
             }
-            Console.WriteLine(salt);
 
             password += salt;
 
@@ -42,17 +41,14 @@ namespace HangmanWeb.Pages
 
             using (SHA256 sha256Hash = SHA256.Create())
             {
-                //From String to byte array
                 byte[] sourceBytes = Encoding.UTF8.GetBytes(password);
                 byte[] hashBytes = sha256Hash.ComputeHash(sourceBytes);
                 string hashedPass = BitConverter.ToString(hashBytes).Replace("-", String.Empty);
 
-                //Console.WriteLine("The SHA256 hash of " + password + " is: " + hashedPass);
-
                 //C:\Users\tobyr\Documents\CS_3750\HangmanProject3750-main\HangmanWeb\HangmanWeb\db\hangmanDB.db
                 //C:\Users\codyb\Documents\Computer Science\SE2\HangmanWeb\HangmanWeb\db\hangmanDB.db
 
-                String connectionString = @"Data Source=C:\Users\codyb\Documents\Computer Science\SE2\HangmanWeb\HangmanWeb\db\hangmanDB.db";
+                String connectionString = @"Data Source=C:\Users\codyb\Documents\Computer Science\SE2\HangmanWeb\HangmanWeb\db\hangmanDB2.db";
 
                 using (System.Data.SQLite.SQLiteConnection conn = new System.Data.SQLite.SQLiteConnection(connectionString))
                 {
@@ -62,7 +58,6 @@ namespace HangmanWeb.Pages
                     command.CommandText = @"SELECT username, password, salt FROM Users WHERE username = $username";
                     command.Parameters.AddWithValue("$username", username);
 
-
                     using (var reader = command.ExecuteReader())
                     {
                         while (reader.Read())
@@ -70,8 +65,6 @@ namespace HangmanWeb.Pages
                             u = reader.GetString(0);
                             p = reader.GetString(1);
                             s = reader.GetString(2);
-
-                            Console.WriteLine($"{u}, {p}, {s}");
                         }
                     }
                 }
@@ -82,10 +75,20 @@ namespace HangmanWeb.Pages
 
                 if (hashedPass1 == p)
                 {
-                    Response.Redirect("https://localhost:7249/Hangman");
+                    SessionVar.Username = username;
+                    Response.Redirect("https://localhost:7249/game.html");
                 }
             }
         }
 
+    }
+
+
+    public class SessionVar
+    {
+        public static string username;
+        public static String Username { get; set; }
+        public static int score;
+        public static int Score { get; set; }
     }
 }

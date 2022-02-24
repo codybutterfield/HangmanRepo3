@@ -35,7 +35,7 @@ namespace HangmanWeb.Pages
 
             string u = "";
 
-            String connectionString = @"Data Source=C:\Users\codyb\Documents\Computer Science\SE2\HangmanWeb\HangmanWeb\db\hangmanDB.db";
+            String connectionString = @"Data Source=C:\Users\codyb\Documents\Computer Science\SE2\HangmanWeb\HangmanWeb\db\hangmanDB2.db";
 
             using (System.Data.SQLite.SQLiteConnection conn = new System.Data.SQLite.SQLiteConnection(connectionString))
             {
@@ -80,7 +80,8 @@ namespace HangmanWeb.Pages
 
                         var ins = insCommand.ExecuteNonQuery();
 
-                        Response.Redirect("https://localhost:7249/Hangman");
+                        SessionVar.Username = username;
+                        Response.Redirect("https://localhost:7249/game.html");
                     }
                 }
             }

@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using HangmanWeb.Pages;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Net;
@@ -34,31 +35,48 @@ namespace HangmanWeb.Controllers
             WebSocketReceiveResult result = await webSocket.ReceiveAsync(new ArraySegment<byte>(buffer), CancellationToken.None);
             HangmanGame game = new HangmanGame();
 
-
-            
             char[] guessLetters;
             int lives;
             game.SetWord();
-            //game.CheckLetter();
             
 
             while (!result.CloseStatus.HasValue)
             {
-                string str = System.Text.Encoding.Default.GetString(buffer);
-                str = str.Trim('\0');
+                
+                //string str = System.Text.Encoding.Default.GetString(buffer);
+                //str = str.Trim('\0');
 
-                //char character = char.Parse(str);
+                char g = (char)buffer[0];
 
-                char[] userWord = game.CheckLetter(str); //try without null character "\0" first. if error add null to end of 
+                char[] userWord = game.CheckLetter(g.ToString()); //try without null character "\0" first. if error add null to end of 
                 lives = game.GetLives();
-                byte[] bytes = Encoding.ASCII.GetBytes(userWord);
-                buffer = bytes;
 
-                await webSocket.SendAsync(new ArraySegment<byte>(buffer, 0, result.Count), result.MessageType, result.EndOfMessage, CancellationToken.None);
+                Console.WriteLine(userWord);
+
+                for (int i=0; i<userWord.Length; i++)
+                {
+                    buffer[i] = (byte)userWord[i];
+                }
+
+                char[] gameWinMsg = { 'Y', 'O', 'U', ' ', 'W', 'I', 'N' };
+
+                if (game.CheckResult())
+                {
+                    Array.Clear(buffer, 0, buffer.Length);
+                    for (int i = 0; i < gameWinMsg.Length; i++)
+                    {
+                        buffer[i] = (byte)gameWinMsg[i];
+                    }
+                    SessionVar.Score = game.GetLives();
+                }
+
+                await webSocket.SendAsync(new ArraySegment<byte>(buffer, 0, buffer.Length), result.MessageType, result.EndOfMessage, CancellationToken.None);
 
                 result = await webSocket.ReceiveAsync(new ArraySegment<byte>(buffer), CancellationToken.None);
+               
             }
             await webSocket.CloseAsync(result.CloseStatus.Value, result.CloseStatusDescription, CancellationToken.None);
+            Response.Redirect("https://localhost:7249/Scores");
         }
     }
 }

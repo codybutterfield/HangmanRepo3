@@ -1,6 +1,6 @@
 {
   "Version": 1,
-  "Hash": "SvXxbSispI4HnYUwFXAzRv2A3/Rl5PZGulrWXQ3RLNc=",
+  "Hash": "2sLTs6YGnNJT2Gzj3DtkXsrleZbRC8Zo0+FIpDs3+Ng=",
   "Source": "HangmanWeb",
   "BasePath": "_content/HangmanWeb",
   "Mode": "Default",
@@ -83,6 +83,23 @@
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
       "OriginalItemSpec": "wwwroot\\favicon.ico"
+    },
+    {
+      "Identity": "C:\\Users\\codyb\\Documents\\Computer Science\\SE2\\HangmanWeb\\HangmanWeb\\wwwroot\\game.html",
+      "SourceId": "HangmanWeb",
+      "SourceType": "Discovered",
+      "ContentRoot": "C:\\Users\\codyb\\Documents\\Computer Science\\SE2\\HangmanWeb\\HangmanWeb\\wwwroot\\",
+      "BasePath": "_content/HangmanWeb",
+      "RelativePath": "game.html",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\game.html"
     },
     {
       "Identity": "C:\\Users\\codyb\\Documents\\Computer Science\\SE2\\HangmanWeb\\HangmanWeb\\wwwroot\\js\\site.js",

@@ -16,7 +16,7 @@ namespace HangmanWeb
         private int lives;
         public HangmanGame()
         {
-            lives = 5;
+            lives = 0;
         }
         public void SetWord()
         {
@@ -28,7 +28,7 @@ namespace HangmanWeb
             guessing = new char[letters.Length];
             for (int i = 0; i < letters.Length; i++)
             {
-                guessing[i] = '_';
+                guessing[i] = '-';
             }
         }
 
@@ -58,7 +58,7 @@ namespace HangmanWeb
 
         public void SetLives()
         {
-            lives -= 1;
+            lives += 1;
         }
 
         public int GetLives()
